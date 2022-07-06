@@ -1,6 +1,9 @@
 from pprint import pprint
 import requests
 import googlemaps
+import os
+
+API_KEY = os.environ.get('YOUTUBE_API_KEY')
 
 map_client = googlemaps.Client(API_KEY)
 
