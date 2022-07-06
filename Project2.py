@@ -1,8 +1,9 @@
 from pprint import pprint
-import re
 import requests
 import googlemaps
+import os
 
+API_KEY = os.environ.get('MAPS_API_KEY')
 map_client = googlemaps.Client(API_KEY)
 
 def get_distance(starting_point, ending_point):
