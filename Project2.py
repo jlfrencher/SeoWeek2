@@ -29,7 +29,7 @@ data = {'name': [],
     
 df = pd.DataFrame(data)
 
-<<<<<<< HEAD
+
 def determine_user_type():
     initial_input = input("Enter 'buy' if you want to see the list of items and 'sell' if you want to list an item to sell")
     if initial_input == 'sell' and len(df.index) == 0:
@@ -108,9 +108,7 @@ while True:
 
 print(get_distance('1311 39th st Des Moines Iowa', 
 '7235 Kingsland Drive Memphis Tennessee'))
-=======
 
 print(get_distance('1311 39th st Des Moines Iowa'
     ,'7235 Kingsland Drive Memphis Tennessee'))
 
->>>>>>> c6c4eb87e8a89b3f6bffce0340f210efb8eecdaa
