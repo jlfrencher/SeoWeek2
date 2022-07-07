@@ -28,19 +28,11 @@ df = pd.DataFrame(columns=sections)
 def determine_user_type():
     initial_input = input("Enter 'buy' if you want to see the list of items and 'sell' if you want to list an item to sell")
     if initial_input == 'sell':
-        add_to_database()
+        current_user_info = get_user_input()
+        add_to_database(current_user_info)
     
 
-def add_to_database():
-    new_data = {'name': [""],
-    'email': [""],
-    'phone number': [""],
-    'item name': [""],
-    'address': [""],
-    'category':[""]
-    }
-    # Adding additional seller's input/information into the dataframe
-    global df
+def get_user_input():
     name = input("Enter your name")
 
     email = input("Enter your email")
@@ -56,9 +48,15 @@ def add_to_database():
     while category != 'clothes' and category != 'electronics' and category != 'free' and category != 'sports equipment' and category != 'other':
         category = input("Please enter a category from the list above").lower()
 
-    global sections
     user_info_list = [name, email, phone_number, item_name, address, category]
-    df2 = pd.DataFrame([user_info_list], columns = sections)
+    return user_info_list
+
+
+def add_to_database(user_list):
+    # Adding additional seller's input/information into the dataframe
+    global df
+    global sections
+    df2 = pd.DataFrame([user_list], columns = sections)
     df = df.append(df2, ignore_index = True)
     print(df)
 
