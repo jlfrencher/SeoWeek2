@@ -12,6 +12,7 @@ map_client = googlemaps.Client(API_KEY)
 
 def get_distance(starting_point, ending_point):
     location = map_client.distance_matrix(starting_point, ending_point)
+    print(location)
 
     distance_in_km = location['rows'][0]['elements'][0]['distance']['text']
 
@@ -26,7 +27,7 @@ df = pd.DataFrame(columns=sections)
 
 
 def determine_user_type():
-    initial_input = input("Enter 'buy' if you want to see the list of items, 'sell' if you want to list an item to sell, or 'q' if you want to quit")
+    initial_input = input("Enter 'buy' if you want to see the list of items, 'sell' if you want to list an item to sell, or 'q' if you want to quit: ")
     if initial_input == 'sell':
         current_user_info = get_user_input()
         add_to_database(current_user_info)
@@ -37,21 +38,17 @@ def determine_user_type():
 
 
 def get_user_input():
-    name = input("Enter your name")
+    name = input("Enter your name: ")
 
-    email = input("Enter your email")
+    email = input("Enter your email: ")
 
-    phone_number = input("Enter your phone number without dashes")
+    phone_number = input("Enter your phone number without dashes: ")
 
-    item_name = input("Enter the name of the item that you want to sell")
+    item_name = input("Enter the name of the item that you want to sell: ")
 
-    address = input("Enter your address")
+    address = input("Enter your address: ")
 
-    print("Electronics \nClothes \nFree \nSports equipment \nOther")
-    category = input("Choose a category from the list above").lower()
-    while category != 'clothes' and category != 'electronics' and category != 'free' and category != 'sports equipment' and category != 'other':
-        category = input("Please enter a category from the list above").lower()
-
+    category = print_categories()
     user_info_list = [name, email, phone_number, item_name, address, category]
     return user_info_list
 
@@ -75,10 +72,7 @@ def display_database():
     user_table = pd.read_sql_table(table_name="Seller_Data", con=engine)
     print(user_table)
 
-    print("Categories:\nElectronics \nClothes \nFree \nSports equipment \nOther")
-    next_input = input("What category would you like to buy from?")
-    while next_input != 'clothes' and next_input != 'electronics' and next_input != 'free' and next_input != 'sports equipment' and next_input != 'other':
-        next_input = input("Please enter a category from the list above").lower()
+    next_input = print_categories()
     #print(engine.execute("SELECT * FROM Seller_Data WHERE category = '" + next_input + "'").fetchall())
     global df
     df2 = df[df['category'].str.contains(next_input)]
@@ -96,6 +90,13 @@ def display_database():
     time = location['rows'][0]['elements'][0]['duration']['text']
     print(distance_in_km)
     print(time)
+
+def print_categories():
+    print("Categories:\nElectronics \nClothes \nFree \nSports equipment \nOther")
+    next_input = input("What category would you like to buy from?: ")
+    while next_input != 'clothes' and next_input != 'electronics' and next_input != 'free' and next_input != 'sports equipment' and next_input != 'other':
+        next_input = input("Please enter a category from the list above").lower()
+    return next_input
 
 
 if __name__ == '__main__':
